@@ -1,0 +1,23 @@
+﻿<Project Sdk="Aspire.AppHost.Sdk/13.0.2">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>027312a8-f436-4650-b2df-c83394665ee9</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.0.2" />
+    <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="13.0.2" />
+    <PackageReference Include="Aspire.Hosting.Redis" Version="13.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Services\CityCab.Driver.API\CityCab.Driver.API.csproj" />
+    <ProjectReference Include="..\Services\CityCab.Rider.API\CityCab.Rider.API.csproj" />
+    <ProjectReference Include="..\Services\CityCab.Trip.API\CityCab.Trip.API.csproj" />
+  </ItemGroup>
+
+</Project>
