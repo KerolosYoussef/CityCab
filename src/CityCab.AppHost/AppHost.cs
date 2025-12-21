@@ -3,6 +3,7 @@ var builder = DistributedApplication.CreateBuilder(args);
 var postgres = builder.AddPostgres("postgres")
     .WithHostPort(5433)
     .WithDataVolume()
+    .WithPgAdmin()
     .WithLifetime(ContainerLifetime.Persistent);
 
 var driversDatabase = postgres.AddDatabase("drivers-db");
