@@ -46,6 +46,9 @@
 
             builder.HasIndex(r => r.Email)
                 .IsUnique();
+
+            builder.HasIndex(r => r.PhoneNumber)
+                .IsUnique();
                 
         }
     }
