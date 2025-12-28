@@ -2,12 +2,12 @@
 {
     public class Address : BaseModel
     {
-        public string Title { get; private set; }
-        public string Street { get; private set; }
-        public string City { get; private set; }
-        public string State { get; private set; }
-        public string PostalCode { get; private set; }
-        public string Country { get; private set; }
+        public string Title { get; private set; } = string.Empty;
+        public string Street { get; private set; } = string.Empty;
+        public string City { get; private set; } = string.Empty;
+        public string State { get; private set; } = string.Empty;
+        public string PostalCode { get; private set; } = string.Empty;
+        public string Country { get; private set; } = string.Empty;
         public bool IsDefault { get; private set; }
         public double Latitude { get; private set; }
         public double Longitude { get; private set; }

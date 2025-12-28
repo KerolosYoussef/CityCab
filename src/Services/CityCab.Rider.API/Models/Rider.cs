@@ -4,14 +4,16 @@
     {
         private readonly List<Address> _addresses = [];
         private readonly List<PaymentMethod> _paymentMethods = [];
+        private const decimal DEFAULT_RATING = 5.0m;
 
         public string Name { get; private set; } = string.Empty;
         public string Email { get; private set; } = string.Empty;
         public string PhoneNumber { get; private set; } = string.Empty;
         public IReadOnlyCollection<Address> Addresses => _addresses.AsReadOnly();
         public IReadOnlyCollection<PaymentMethod> PaymentMethods => _paymentMethods.AsReadOnly();
-        public decimal Rating { get; private set; } = 5.0m; // Start with 5 stars
-            
+        public decimal Rating { get; private set; } = DEFAULT_RATING; // Start with 5 stars
+
+
         private Rider() { }
 
         private Rider(string name, string email, string phone)
@@ -29,7 +31,17 @@
             return new Rider(name, email, phone);
         }
 
-        public void AddAddress(
+        public void UpdateRiderDetails(string name, string email, string phone)
+        {
+            ArgumentNullException.ThrowIfNull(name, nameof(name));
+            ArgumentNullException.ThrowIfNull(email, nameof(email));
+            
+            Name = name;
+            Email = email;
+            PhoneNumber = phone;
+        }
+
+        public Result<Address> AddAddress(
             string title, 
             string street, 
             string city, 
@@ -42,12 +54,14 @@
         )
         {
             if (_addresses.Any(a => a.Title == title))
-                throw new InvalidOperationException("Address title already exists.");
+                return Result<Address>.Failure(Error.Validation("Address title already exists."));
 
-            _addresses.Add(Address.Create(title, street, city, state, postalCode, country, isDefault, lat, lon));
+            var address = Address.Create(title, street, city, state, postalCode, country, isDefault, lat, lon);
+            _addresses.Add(address);
+            return Result<Address>.Success(address);
         }
 
-        public void AddPaymentMethod(
+        public Result<PaymentMethod> AddPaymentMethod(
             string cardHolderName,
             string cardHolderType,
             string providerToken,
@@ -58,17 +72,11 @@
         )
         {
             if (_paymentMethods.Any(pm => pm.Last4Digits == last4Digits && pm.ExpiryMonth == expiryMonth && pm.ExpiryYear == expiryYear))
-                throw new InvalidOperationException("Payment method already exists.");
+                return Result<PaymentMethod>.Failure(Error.Validation("Payment method already exists."));
 
-            _paymentMethods.Add(PaymentMethod.Create(
-                cardHolderName,
-                cardHolderType,
-                providerToken,
-                last4Digits,
-                expiryMonth,
-                expiryYear,
-                isDefault
-            ));
+            var paymentMethod = PaymentMethod.Create(cardHolderName, cardHolderType, providerToken, last4Digits, expiryMonth, expiryYear, isDefault);
+            _paymentMethods.Add(paymentMethod);
+            return Result<PaymentMethod>.Success(paymentMethod);
         }
     }
 }
