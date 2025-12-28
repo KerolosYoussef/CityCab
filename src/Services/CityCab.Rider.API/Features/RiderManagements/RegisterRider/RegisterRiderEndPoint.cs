@@ -1,6 +1,6 @@
 ﻿namespace CityCab.Rider.API.Features.RiderManagements.RegisterRider
 {
-    public sealed record RigsterRiderRequest(string Name, string Email, string Phone);
+    public sealed record RegisterRiderRequest(string Name, string Email, string Phone);
     public class RegisterRiderEndPoint : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
@@ -11,7 +11,7 @@
                 .ProducesProblem(StatusCodes.Status400BadRequest);
         }
 
-        private static async Task<IResult> RegisterRider(RigsterRiderRequest request, ISender sender)
+        private static async Task<IResult> RegisterRider(RegisterRiderRequest request, ISender sender)
         {
             // map request to command
             var command = request.Adapt<RegisterRiderCommand>();
