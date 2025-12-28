@@ -1,3 +1,6 @@
+using CityCab.Rider.API;
+using CityCab.Rider.API.Features.RiderManagements.Shared;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
@@ -6,6 +9,7 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddCarter();
+builder.Services.AddRiderAPIServices();
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssemblyContaining<Program>();
@@ -19,7 +23,7 @@ builder.AddNpgsqlDbContext<ApplicationDbContext>("rider-db");
 
 var app = builder.Build();
 
-app.Services.MigrateData();
+await app.Services.MigrateData();
 
 app.MapCarter();
 
