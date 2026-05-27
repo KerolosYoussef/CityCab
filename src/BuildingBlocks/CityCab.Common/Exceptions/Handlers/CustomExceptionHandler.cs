@@ -13,9 +13,17 @@ namespace CityCab.Common.Exceptions.Handlers
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
             _logger.LogError(
-            "Error Message: {exceptionMessage}, Time of occurrence {time}",
+            "Error Message: {ExceptionMessage}, Time of occurrence {Time}",
             exception.Message, DateTime.UtcNow);
 
+            var problemDetails = CreateProblemDetails(httpContext, exception);
+
+            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken: cancellationToken);
+            return true;
+        }
+
+        private static ProblemDetails CreateProblemDetails(HttpContext httpContext, Exception exception)
+        {
             (string Detail, string Title, int StatusCode) = exception switch
             {
                 InternalServerException =>
@@ -65,8 +73,7 @@ namespace CityCab.Common.Exceptions.Handlers
                 problemDetails.Extensions.Add("ValidationErrors", validationException.Errors);
             }
 
-            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken: cancellationToken);
-            return true;
+            return problemDetails;
         }
     }
 }

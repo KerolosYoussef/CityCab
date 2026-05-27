@@ -1,7 +1,4 @@
-﻿using CityCab.Rider.API.Features.RiderManagements.Shared;
-using static CityCab.Common.Interfaces.CQRS.Commands.ICommandHandler;
-
-namespace CityCab.Rider.API.Features.RiderManagements.UpdateRider
+﻿namespace CityCab.Rider.API.Features.RiderManagements.UpdateRider
 {
     public sealed record UpdateRiderCommand(Guid Id, string Name, string Email, string Phone) 
         : ICommand<Result<Unit>>, IRiderCommand;

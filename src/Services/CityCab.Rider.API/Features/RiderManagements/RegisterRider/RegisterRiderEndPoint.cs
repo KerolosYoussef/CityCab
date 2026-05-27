@@ -6,18 +6,18 @@
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapPost("/riders", RegisterRider)
-                .WithName("RegisterRider")
+                .WithName("RegisterRider")  
                 .Produces<Result<Guid>>()
                 .ProducesProblem(StatusCodes.Status400BadRequest);
         }
 
-        private static async Task<IResult> RegisterRider(RegisterRiderRequest request, ISender sender)
+        private static async Task<IResult> RegisterRider(RegisterRiderRequest request, ISender sender, CancellationToken cancellationToken)
         {
             // map request to command
             var command = request.Adapt<RegisterRiderCommand>();
 
             // send the command to its handler
-            var result = await sender.Send(command);
+            var result = await sender.Send(command, cancellationToken);
 
             // return appropriate response
             return result.IsSuccess

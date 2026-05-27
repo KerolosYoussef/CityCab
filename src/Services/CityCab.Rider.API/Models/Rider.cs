@@ -78,5 +78,17 @@
             _paymentMethods.Add(paymentMethod);
             return Result<PaymentMethod>.Success(paymentMethod);
         }
+
+        public Result DeletePaymentMethod(Guid paymentMethodId)
+        {
+            if (_paymentMethods.FirstOrDefault(p => p.Id == paymentMethodId) is not PaymentMethod paymentMethod)
+                return Result.Failure(Error.NotFound(nameof(PaymentMethod), paymentMethodId));
+
+            var result = _paymentMethods.Remove(paymentMethod);
+
+            return result 
+                ? Result.Success() 
+                : Result.Failure(Error.Validation("Can't remove payment method, please contact system administrator"));
+        }
     }
 }

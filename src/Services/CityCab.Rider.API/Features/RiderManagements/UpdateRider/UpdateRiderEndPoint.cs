@@ -11,11 +11,11 @@
                 .ProducesProblem(StatusCodes.Status400BadRequest);
         }
 
-        private static async Task<IResult> UpdateRider(UpdateRiderRequest request, Guid id, ISender sender)
+        private static async Task<IResult> UpdateRider(UpdateRiderRequest request, Guid id, ISender sender, CancellationToken cancellationToken)
         {
             var command = new UpdateRiderCommand(id, request.Name, request.Email, request.Phone);
 
-            var result = await sender.Send(command);
+            var result = await sender.Send(command, cancellationToken);
 
             return result.IsSuccess
                 ? Results.Ok(result)

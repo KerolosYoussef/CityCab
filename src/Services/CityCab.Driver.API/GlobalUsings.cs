@@ -1,0 +1,14 @@
+﻿global using Carter;
+global using CityCab.Common.Behaviors;
+global using CityCab.Common.Exceptions.Handlers;
+global using CityCab.Driver.API;
+global using FluentValidation;
+global using System.Reflection;
+global using CityCab.Driver.API.Models;
+global using MassTransit;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Query;
+global using System.Linq.Expressions;
+global using CityCab.Driver.API.Helpers;
+global using CityCab.Driver.API.Infrastructure;
+global using CityCab.Messaging.Common.MassTransit;

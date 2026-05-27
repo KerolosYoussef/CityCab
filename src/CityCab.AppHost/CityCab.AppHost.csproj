@@ -17,7 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Services\CityCab.Driver.API\CityCab.Driver.API.csproj" />
     <ProjectReference Include="..\Services\CityCab.Rider.API\CityCab.Rider.API.csproj" />
-    <ProjectReference Include="..\Services\CityCab.Trip.API\CityCab.Trip.API.csproj" />
+    <ProjectReference Include="..\Services\CityCab.Trip\CityCab.Trip.API\CityCab.Trip.API.csproj" />
   </ItemGroup>
 
 </Project>

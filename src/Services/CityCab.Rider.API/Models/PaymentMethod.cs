@@ -2,14 +2,14 @@
 {
     public class PaymentMethod : BaseModel
     {
-        public string CardHolderName { get; private set; } = string.Empty;
-        public string CardHolderType { get; private set; } = string.Empty;
-        public string ProviderToken { get; private set; } = string.Empty;
-        public string Last4Digits { get; private set; } = string.Empty;
-        public string ExpiryMonth { get; private set; } = string.Empty;
-        public string ExpiryYear { get; private set; } = string.Empty;
+        public string CardHolderName { get; private set; }
+        public string CardHolderType { get; private set; }
+        public string ProviderToken { get; private set; }
+        public string Last4Digits { get; private set; }
+        public string ExpiryMonth { get; private set; }
+        public string ExpiryYear { get; private set; }
         public bool IsDefault { get; private set; }
-        public Guid RiderId { get; private set; }
+        public Guid RiderId { get; }
         private PaymentMethod(
             string cardHolderName,
             string cardHolderType,
@@ -50,5 +50,9 @@
             );
         }
 
+        public void SetDefault(bool isDefault)
+        {
+            IsDefault = isDefault;
+        }
     }
 }

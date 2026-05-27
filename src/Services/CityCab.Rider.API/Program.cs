@@ -1,7 +1,8 @@
-using CityCab.Rider.API;
-using CityCab.Rider.API.Features.RiderManagements.Shared;
+using CityCab.Rider.API.Infrastructure.Hubs;
+using CityCab.Trip.API;
 
 var builder = WebApplication.CreateBuilder(args);
+Assembly currentAssembly = typeof(Program).Assembly;
 
 builder.AddServiceDefaults();
 
@@ -9,15 +10,23 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddCarter();
+builder.Services.AddSignalR();
 builder.Services.AddRiderAPIServices();
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssemblyContaining<Program>();
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
-    // TODO cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
+builder.Services.AddValidatorsFromAssembly(currentAssembly);
+
+builder.Services.AddGrpcClient<FareEstimateService.FareEstimateServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:TripUrl"]!);
+});
+
+builder.Services.AddMessageBrokerWithOutbox<ApplicationDbContext>
+    (builder.Configuration, currentAssembly);
 
 builder.AddNpgsqlDbContext<ApplicationDbContext>("rider-db");
 
@@ -29,4 +38,6 @@ app.MapCarter();
 
 app.UseExceptionHandler();
 
-app.Run();
+app.MapHub<RideHub>("/hubs/ride");
+
+await app.RunAsync();

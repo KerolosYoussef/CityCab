@@ -1,6 +1,4 @@
-﻿using CityCab.Rider.API.Features.RiderManagements.Shared;
-
-namespace CityCab.Rider.API
+﻿namespace CityCab.Rider.API
 {
     public static class DependencyInjection
     {

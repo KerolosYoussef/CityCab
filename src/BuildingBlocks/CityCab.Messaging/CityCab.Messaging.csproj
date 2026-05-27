@@ -8,8 +8,12 @@
 
   <ItemGroup>
     <Folder Include="Driver\" />
-    <Folder Include="Rider\" />
-    <Folder Include="Trip\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="9.0.1" />
+    <PackageReference Include="MassTransit.EntityFrameworkCore" Version="9.0.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.1" />
   </ItemGroup>
 
 </Project>

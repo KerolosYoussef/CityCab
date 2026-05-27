@@ -1,3 +1,6 @@
 src/.vs/
 **/bin/
 **/obj/
+/.claude/settings.local.json
+/docs/SRS.md
+/CLAUDE.md

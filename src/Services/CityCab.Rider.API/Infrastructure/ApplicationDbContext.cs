@@ -1,14 +1,20 @@
-﻿namespace CityCab.Rider.API.Infrastructure
+﻿using MassTransit;
+
+namespace CityCab.Rider.API.Infrastructure
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
     {
         public DbSet<Models.Rider> Riders { get; set; }
+        public DbSet<TripHistory> TripHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
             ApplyDeletedAtGlobalFilter(modelBuilder);
+            modelBuilder.AddInboxStateEntity();
+            modelBuilder.AddOutboxMessageEntity();
+            modelBuilder.AddOutboxStateEntity();
         }
 
         private static void ApplyDeletedAtGlobalFilter(ModelBuilder modelBuilder)

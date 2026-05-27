@@ -6,7 +6,7 @@ var postgres = builder.AddPostgres("postgres")
     .WithPgAdmin()
     .WithLifetime(ContainerLifetime.Persistent);
 
-var driversDatabase = postgres.AddDatabase("drivers-db");
+var driversDatabase = postgres.AddDatabase("driver-db");
 var tripDatabase = postgres.AddDatabase("citycab-trip");
 var riderDatabase = postgres.AddDatabase("rider-db");
 

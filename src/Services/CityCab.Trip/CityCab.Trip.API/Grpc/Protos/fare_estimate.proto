@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option csharp_namespace = "CityCab.Trip.API";
+
+package trip;
+
+service FareEstimateService {
+	rpc GetFareEstimate (FareEstimateRequest) returns (FareEstimateResponse);
+}
+
+message FareEstimateRequest {
+	string riderId = 1;
+	string pickupLocation = 2;
+	string dropoffLocation = 3;
+}
+
+message FareEstimateResponse {
+	string riderId = 1;
+	double estimatedFare = 2;
+	double distanceKM = 3;
+	int32 durationMinutes = 4;
+}

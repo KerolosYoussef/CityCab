@@ -13,3 +13,7 @@ global using CityCab.Rider.API.Infrastructure;
 global using CityCab.Common.Behaviors;
 global using CityCab.Common.Exceptions.Handlers;
 global using CityCab.Rider.API.Helpers;
+global using CityCab.Rider.API.Features.RiderManagements.Shared;
+global using CityCab.Messaging.Common.MassTransit;
+global using CityCab.Rider.API;
+global using System.Reflection;
